@@ -6,12 +6,20 @@ Vue.use(Vuex);
 const store = new Vuex.Store(
   {
     state: {
-      auth: false,
+      client: false,
       admin: false,
+      client_name: '',
+      info: {},
     },
     mutations: {
-      setAuth(state, status) {
-        state.auth = status;
+      setInfo(state, response) {
+        state.info = response;
+      },
+      setName(state, status) {
+        state.client_name = status;
+      },
+      setClient(state, status) {
+        state.client = status;
       },
       setAdmin(state, status) {
         state.admin = status;

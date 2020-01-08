@@ -2,9 +2,10 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import store from '../store/store';
 import Books from '../components/books.vue';
-import Ping from '../components/ping.vue';
+import Client from '../components/client.vue';
 import Login from '../components/login.vue';
 import Admin from '../components/admin.vue';
+import RouteTable from '../components/routeTable.vue';
 
 Vue.use(VueRouter);
 
@@ -24,9 +25,21 @@ export default new VueRouter({
       component: Books,
     },
     {
-      path: '/ping',
-      name: 'Ping',
-      component: Ping,
+      path: '/routeTable',
+      name: 'RouteTable',
+      component: RouteTable,
+    },
+    {
+      path: '/client',
+      name: 'Client',
+      component: Client,
+      beforeEnter: (to, from, next) => {
+        if (store.state.client === false) {
+          next(false);
+        } else {
+          next();
+        }
+      },
     },
     {
       path: '/login',

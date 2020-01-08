@@ -10,13 +10,14 @@
             <div class="card fat">
               <div class="card-body">
                 <h4 class="card-title">Нэвтрэх</h4>
-                <form action="/">
+                <form>
                   <div class="form-group">
                     <label for="email">Нэр үг</label>
                     <input
                       id="email"
                       type="text"
                       v-model="login.email"
+                      required
                       class="form-control"
                       autofocus
                     />
@@ -27,12 +28,13 @@
                       id="password"
                       type="password"
                       v-model="login.password"
+                      required
                       class="form-control"
                       data-eye />
                   </div>
                   <div class="form-group"></div>
                   <div class="form-group no-margin">
-                    <button type="button" @click="onLogin()"
+                    <button type="button" @click="onSubmit()"
                     class="btn btn-primary btn-block"> Нэвтрэх</button>
                   </div>
                 </form>
@@ -46,9 +48,6 @@
 </template>
 
 <style>
-body {
-  background-color: orange;
-}
 </style>
 
 <script>
@@ -73,6 +72,22 @@ export default {
             this.$store.commit('setAdmin', true);
             this.$router.replace('/admin');
           }
+          if (res.data === 'success') {
+            this.$store.commit('setClient', true);
+            this.$store.commit('setName', this.login.email);
+            this.$router.replace('/client');
+            const infopath = `http://localhost:5000/get_info/${this.login.email}`;
+            axios.get(infopath)
+              .then((response) => {
+                this.$store.commit('setInfo', response.data);
+              });
+            // eslint-disable-next-line
+            console.log('logged');
+          }
+          if (res.data === 'error') {
+            // eslint-disable-next-line
+          console.log(error);
+          }
           // eslint-disable-next-line
           console.log(res);
         })
@@ -82,7 +97,9 @@ export default {
         });
     },
     onSubmit() {
-
+      if (this.login.email !== '' && this.login.password !== '') {
+        this.onLogin();
+      }
     },
   },
   mounted() {
