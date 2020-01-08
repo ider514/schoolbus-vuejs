@@ -1,15 +1,23 @@
 import Vue from 'vue';
-import Router from 'vue-router';
+import VueRouter from 'vue-router';
+import store from '../store/store';
 import Books from '../components/books.vue';
 import Ping from '../components/ping.vue';
-import Test from '../components/test.vue';
+import Login from '../components/login.vue';
+import Admin from '../components/admin.vue';
 
-Vue.use(Router);
+Vue.use(VueRouter);
 
-export default new Router({
+export default new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
+    {
+      path: '/',
+      redirect: {
+        name: 'login',
+      },
+    },
     {
       path: '/books',
       name: 'Books',
@@ -21,9 +29,21 @@ export default new Router({
       component: Ping,
     },
     {
-      path: '/test',
-      name: 'test',
-      component: Test,
+      path: '/login',
+      name: 'login',
+      component: Login,
+    },
+    {
+      path: '/admin',
+      name: 'admin',
+      component: Admin,
+      beforeEnter: (to, from, next) => {
+        if (store.state.admin === false) {
+          next(false);
+        } else {
+          next();
+        }
+      },
     },
   ],
 });
