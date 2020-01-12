@@ -3,13 +3,13 @@
     <div class="sidebar sidebar-dark bg-dark">
       <ul class="list-unstyled">
         <li>
-          <router-link to="/" class="nav-link">
-            <i class="icon fa fa-home"></i> Home
+          <router-link to="/allbuses" class="nav-link">
+            <i class="icon fa fa-home"></i> Автуснууд
           </router-link>
         </li>
         <li>
-          <router-link to="/forms" class="nav-link">
-            <i class="icon fa fa-edit"></i> Forms
+          <router-link to="/allschools" class="nav-link">
+            <i class="icon fa fa-edit"></i> Сургуулиуд
           </router-link>
         </li>
         <li>

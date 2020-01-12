@@ -4,8 +4,10 @@ import store from '../store/store';
 import Books from '../components/books.vue';
 import Client from '../components/client.vue';
 import Login from '../components/login.vue';
-import Admin from '../components/admin.vue';
 import RouteTable from '../components/routeTable.vue';
+import Admin from '../components/admin_components/admin.vue';
+import Allbuses from '../components/admin_components/allbuses.vue';
+import AllSchools from '../components/admin_components/allschools.vue';
 
 Vue.use(VueRouter);
 
@@ -23,6 +25,30 @@ export default new VueRouter({
       path: '/books',
       name: 'Books',
       component: Books,
+    },
+    {
+      path: '/allbuses',
+      name: 'Buses',
+      component: Allbuses,
+      beforeEnter: (to, from, next) => {
+        if (store.state.admin === false) {
+          next(false);
+        } else {
+          next();
+        }
+      },
+    },
+    {
+      path: '/allschools',
+      name: 'Schools',
+      component: AllSchools,
+      beforeEnter: (to, from, next) => {
+        if (store.state.admin === false) {
+          next(false);
+        } else {
+          next();
+        }
+      },
     },
     {
       path: '/routeTable',
