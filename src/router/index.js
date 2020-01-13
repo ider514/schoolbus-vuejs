@@ -2,7 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import store from '../store/store';
 import Books from '../components/books.vue';
-import Client from '../components/client.vue';
+import Client from '../components/client_components/client.vue';
 import Login from '../components/login.vue';
 import RouteTable from '../components/routeTable.vue';
 import Admin from '../components/admin_components/admin.vue';

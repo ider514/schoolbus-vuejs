@@ -4,20 +4,38 @@
       <div class="col-sm-10">
         <h1>Books</h1>
         <hr><br><br>
-        <alert :message=message v-if="showMessage"></alert>
-        <button type="button" class="btn btn-success btn-sm" v-b-modal.book-modal>Add Book</button>
+        <alert
+          v-if="showMessage"
+          :message="message"
+        />
+        <button
+          v-b-modal.book-modal
+          type="button"
+          class="btn btn-success btn-sm"
+        >
+          Add Book
+        </button>
         <br><br>
         <table class="table table-hover">
           <thead>
             <tr>
-              <th scope="col">Title</th>
-              <th scope="col">Author</th>
-              <th scope="col">Read?</th>
-              <th></th>
+              <th scope="col">
+                Title
+              </th>
+              <th scope="col">
+                Author
+              </th>
+              <th scope="col">
+                Read?
+              </th>
+              <th />
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(book, index) in books" :key="index">
+            <tr
+              v-for="(book, index) in books"
+              :key="index"
+            >
               <td>{{ book.title }}</td>
               <td>{{ book.author }}</td>
               <td>
@@ -25,19 +43,24 @@
                 <span v-else>No</span>
               </td>
               <td>
-                <div class="btn-group" role="group">
+                <div
+                  class="btn-group"
+                  role="group"
+                >
                   <button
-                          type="button"
-                          class="btn btn-warning btn-sm"
-                          v-b-modal.book-update-modal
-                          @click="editBook(book)">
-                      Update
+                    v-b-modal.book-update-modal
+                    type="button"
+                    class="btn btn-warning btn-sm"
+                    @click="editBook(book)"
+                  >
+                    Update
                   </button>
                   <button
-                          type="button"
-                          class="btn btn-danger btn-sm"
-                          @click="onDeleteBook(book)">
-                      Delete
+                    type="button"
+                    class="btn btn-danger btn-sm"
+                    @click="onDeleteBook(book)"
+                  >
+                    Delete
                   </button>
                 </div>
               </td>
@@ -46,75 +69,129 @@
         </table>
       </div>
     </div>
-    <b-modal ref="addBookModal"
-            id="book-modal"
-            title="Add a new book"
-            hide-footer>
-      <b-form @submit="onSubmit" @reset="onReset" class="w-100">
-      <b-form-group id="form-title-group"
-                    label="Title:"
-                    label-for="form-title-input">
-          <b-form-input id="form-title-input"
-                        type="text"
-                        v-model="addBookForm.title"
-                        required
-                        placeholder="Enter title">
-          </b-form-input>
+    <b-modal
+      id="book-modal"
+      ref="addBookModal"
+      title="Add a new book"
+      hide-footer
+    >
+      <b-form
+        class="w-100"
+        @submit="onSubmit"
+        @reset="onReset"
+      >
+        <b-form-group
+          id="form-title-group"
+          label="Title:"
+          label-for="form-title-input"
+        >
+          <b-form-input
+            id="form-title-input"
+            v-model="addBookForm.title"
+            type="text"
+            required
+            placeholder="Enter title"
+          />
         </b-form-group>
-        <b-form-group id="form-author-group"
-                      label="Author:"
-                      label-for="form-author-input">
-            <b-form-input id="form-author-input"
-                          type="text"
-                          v-model="addBookForm.author"
-                          required
-                          placeholder="Enter author">
-            </b-form-input>
-          </b-form-group>
+        <b-form-group
+          id="form-author-group"
+          label="Author:"
+          label-for="form-author-input"
+        >
+          <b-form-input
+            id="form-author-input"
+            v-model="addBookForm.author"
+            type="text"
+            required
+            placeholder="Enter author"
+          />
+        </b-form-group>
         <b-form-group id="form-read-group">
-          <b-form-checkbox-group v-model="addBookForm.read" id="form-checks">
-            <b-form-checkbox value="true">Read?</b-form-checkbox>
+          <b-form-checkbox-group
+            id="form-checks"
+            v-model="addBookForm.read"
+          >
+            <b-form-checkbox value="true">
+              Read?
+            </b-form-checkbox>
           </b-form-checkbox-group>
         </b-form-group>
         <b-button-group>
-          <b-button type="submit" variant="primary">Submit</b-button>
-          <b-button type="reset" variant="danger">Reset</b-button>
+          <b-button
+            type="submit"
+            variant="primary"
+          >
+            Submit
+          </b-button>
+          <b-button
+            type="reset"
+            variant="danger"
+          >
+            Reset
+          </b-button>
         </b-button-group>
       </b-form>
     </b-modal>
-    <b-modal ref="editBookModal"
-            id="book-update-modal"
-            title="Update"
-            hide-footer>
-      <b-form @submit="onSubmitUpdate" @reset="onResetUpdate" class="w-100">
-      <b-form-group id="form-title-edit-group"
-                    label="Title:"
-                    label-for="form-title-edit-input">
-          <b-form-input id="form-title-edit-input"
-                        type="text"
-                        v-model="editForm.title"
-                        required
-                        placeholder="Enter title">
-          </b-form-input>
+    <b-modal
+      id="book-update-modal"
+      ref="editBookModal"
+      title="Update"
+      hide-footer
+    >
+      <b-form
+        class="w-100"
+        @submit="onSubmitUpdate"
+        @reset="onResetUpdate"
+      >
+        <b-form-group
+          id="form-title-edit-group"
+          label="Title:"
+          label-for="form-title-edit-input"
+        >
+          <b-form-input
+            id="form-title-edit-input"
+            v-model="editForm.title"
+            type="text"
+            required
+            placeholder="Enter title"
+          />
         </b-form-group>
-        <b-form-group id="form-author-edit-group"
-                      label="Author:"
-                      label-for="form-author-edit-input">
-            <b-form-input id="form-author-edit-input"
-                          type="text"
-                          v-model="editForm.author"
-                          required
-                          placeholder="Enter author">
-            </b-form-input>
-          </b-form-group>
+        <b-form-group
+          id="form-author-edit-group"
+          label="Author:"
+          label-for="form-author-edit-input"
+        >
+          <b-form-input
+            id="form-author-edit-input"
+            v-model="editForm.author"
+            type="text"
+            required
+            placeholder="Enter author"
+          />
+        </b-form-group>
         <b-form-group id="form-read-edit-group">
-          <b-form-checkbox-group v-model="editForm.read" id="form-checks">
-            <b-form-checkbox value="true">Read?</b-form-checkbox>
+          <b-form-checkbox-group
+            id="form-checks"
+            v-model="editForm.read"
+          >
+            <b-form-checkbox value="true">
+              Read?
+            </b-form-checkbox>
           </b-form-checkbox-group>
         </b-form-group>
         <b-button-group>
-          <b-button type="submit" variant="primary">Update</b-button>
-          <b-button type="reset" variant="danger">Cancel</b-button>
+          <b-button
+            type="submit"
+            variant="primary"
+          >
+            Update
+          </b-button>
+          <b-button
+            type="reset"
+            variant="danger"
+          >
+            Cancel
+          </b-button>
         </b-button-group>
       </b-form>
     </b-modal>
@@ -126,6 +203,9 @@ import axios from 'axios';
 import Alert from './alert.vue';
 
 export default {
+  components: {
+    alert: Alert,
+  },
   data() {
     return {
       books: [],
@@ -144,8 +224,8 @@ export default {
       },
     };
   },
-  components: {
-    alert: Alert,
+  created() {
+    this.getBooks();
   },
   methods: {
     getBooks() {
@@ -252,9 +332,6 @@ export default {
     onDeleteBook(book) {
       this.removeBook(book.id);
     },
-  },
-  created() {
-    this.getBooks();
   },
 };
 </script>

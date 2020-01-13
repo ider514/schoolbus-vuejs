@@ -5,37 +5,47 @@
         <div class="row justify-content-md-center">
           <div class="col-md-7 col-lg-5">
             <div class="center">
-              <img src="./assets/logo.png" width="450" />
+              <img
+                src="./assets/logo.png"
+              >
             </div>
             <div class="card fat">
               <div class="card-body">
-                <h4 class="card-title">Нэвтрэх</h4>
+                <h4 class="card-title">
+                  Нэвтрэх
+                </h4>
                 <form>
                   <div class="form-group">
                     <label for="email">Нэр үг</label>
                     <input
                       id="email"
-                      type="text"
                       v-model="login.email"
+                      type="text"
                       required
                       class="form-control"
                       autofocus
-                    />
+                    >
                   </div>
                   <div class="form-group">
                     <label for="password">Нүүц үг</label>
                     <input
                       id="password"
-                      type="password"
                       v-model="login.password"
+                      type="password"
                       required
                       class="form-control"
-                      data-eye />
+                      data-eye
+                    >
                   </div>
-                  <div class="form-group"></div>
+                  <div class="form-group" />
                   <div class="form-group no-margin">
-                    <button type="button" @click="onSubmit()"
-                    class="btn btn-primary btn-block"> Нэвтрэх</button>
+                    <button
+                      type="button"
+                      class="btn btn-primary btn-block"
+                      @click="onSubmit()"
+                    >
+                      Нэвтрэх
+                    </button>
                   </div>
                 </form>
               </div>
@@ -48,6 +58,15 @@
 </template>
 
 <style>
+.center {
+  margin: auto
+}
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+}
 </style>
 
 <script>
@@ -62,6 +81,9 @@ export default {
       },
       response: '',
     };
+  },
+  mounted() {
+    document.title = 'School-Bus';
   },
   methods: {
     onLogin() {
@@ -101,9 +123,6 @@ export default {
         this.onLogin();
       }
     },
-  },
-  mounted() {
-    document.title = 'School-Bus';
   },
 };
 </script>

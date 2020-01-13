@@ -1,19 +1,34 @@
 <template>
   <div>
-    <navbar-component></navbar-component>
+    <navbar-component />
     <div class="d-flex">
-      <sidebar-component></sidebar-component>
+      <sidebar-component />
       <div class="content p-4">
-        <h2 class="mb-4">Tables</h2>
-        <div class="card mb-4" id="table">
+        <h2 class="mb-4">
+          Tables
+        </h2>
+        <div
+          id="table"
+          class="card mb-4"
+        >
           <div class="card-header bg-white">
             <div class="row align-items-center">
-              <div class="col-md-7 font-weight-bold">List.js Table</div>
+              <div class="col-md-7 font-weight-bold">
+                List.js Table
+              </div>
               <div class="col-md-5">
                 <div class="input-group">
-                  <input class="form-control search" placeholder="Search" />
+                  <input
+                    class="form-control search"
+                    placeholder="Search"
+                  >
                   <div class="input-group-append">
-                    <button class="btn btn-primary sort" data-sort="name">Sort by name</button>
+                    <button
+                      class="btn btn-primary sort"
+                      data-sort="name"
+                    >
+                      Sort by name
+                    </button>
                   </div>
                 </div>
               </div>
@@ -23,30 +38,50 @@
             <table class="table table-bordered">
               <thead>
                 <tr>
-                  <th width="80%">Name</th>
-                  <th width="20%">Born</th>
+                  <th width="80%">
+                    Name
+                  </th>
+                  <th width="20%">
+                    Born
+                  </th>
                 </tr>
               </thead>
               <tbody class="list">
                 <tr>
-                  <td class="name">Jonny Stromberg</td>
-                  <td class="born">1986</td>
+                  <td class="name">
+                    Jonny Stromberg
+                  </td>
+                  <td class="born">
+                    1986
+                  </td>
                 </tr>
                 <tr>
-                  <td class="name">Jonas Arnklint</td>
-                  <td class="born">1985</td>
+                  <td class="name">
+                    Jonas Arnklint
+                  </td>
+                  <td class="born">
+                    1985
+                  </td>
                 </tr>
                 <tr>
-                  <td class="name">Martina Elm</td>
-                  <td class="born">1986</td>
+                  <td class="name">
+                    Martina Elm
+                  </td>
+                  <td class="born">
+                    1986
+                  </td>
                 </tr>
                 <tr>
-                  <td class="name">Gustaf Lindqvist</td>
-                  <td class="born">{{info}}</td>
+                  <td class="name">
+                    Gustaf Lindqvist
+                  </td>
+                  <td class="born">
+                    {{ info }}
+                  </td>
                 </tr>
               </tbody>
             </table>
-            <ul class="pagination justify-content-end"></ul>
+            <ul class="pagination justify-content-end" />
           </div>
         </div>
       </div>
