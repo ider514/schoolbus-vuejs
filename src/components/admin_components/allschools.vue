@@ -33,14 +33,14 @@
       </thead>
       <tbody>
         <tr
-          v-for="(schools) in schools"
-          :key="schools"
+          v-for="(x) in schools"
+          :key="x"
         >
           <th scope="row">
-            {{ schools.username }}
+            {{ x.username }}
           </th>
-          <td>{{ schools.buses }}</td>
-          <td>{{ schools._id }}</td>
+          <td>{{ x.buses }}</td>
+          <td>{{ x._id }}</td>
         </tr>
       </tbody>
     </table>

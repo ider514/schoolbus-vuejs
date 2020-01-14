@@ -11,14 +11,14 @@
       </thead>
       <tbody>
         <tr
-          v-for="buses in buses"
-          :key="buses"
+          v-for="x in buses"
+          :key="x"
         >
           <th scope="row">
-            {{ buses.licensenumber }}
+            {{ x.licensenumber }}
           </th>
-          <td>{{ buses.phone }}</td>
-          <td>{{ buses.id }}</td>
+          <td>{{ x.phone }}</td>
+          <td>{{ x.id }}</td>
         </tr>
       </tbody>
     </table>

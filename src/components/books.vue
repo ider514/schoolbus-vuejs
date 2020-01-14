@@ -200,12 +200,8 @@
 
 <script>
 import axios from 'axios';
-import Alert from './alert.vue';
 
 export default {
-  components: {
-    alert: Alert,
-  },
   data() {
     return {
       books: [],

@@ -10,15 +10,17 @@
           <h2>Автус</h2>
           <table style="width:100%">
             <tr>
-              <th>Name</th>
-              <th colspan="2">
-                Telephone
-              </th>
+              <th>ID</th>
+              <th>Дугаар</th>
+              <th>Утас</th>
             </tr>
-            <tr>
-              <td>Bill Gates</td>
-              <td>55577854</td>
-              <td>55577855</td>
+            <tr
+              v-for="bus in buses"
+              :key="bus"
+            >
+              <td>{{ bus.id }}</td>
+              <td>{{ bus.licensenumber }}</td>
+              <td>{{ bus.phone }}</td>
             </tr>
           </table>
         </div>
@@ -26,27 +28,17 @@
           <h2>Маршрут</h2>
           <table style="width:100%">
             <tr>
-              <th>Name</th>
-              <th colspan="2">
-                Telephone
-              </th>
+              <th>Нэр</th>
+              <th>Өргөрөг</th>
+              <th>Уртраг</th>
             </tr>
-            <tr>
-              <td>Bill Gates</td>
-              <td>55577854</td>
-              <td>          <table style="width:100%">
-            <tr>
-              <th>Name</th>
-              <th colspan="2">
-                Telephone
-              </th>
-            </tr>
-            <tr>
-              <td>Bill Gates</td>
-              <td>55577854</td>
-              <td>55577855</td>
-            </tr>
-          </table></td>
+            <tr
+              v-for="title in titles"
+              :key="title"
+            >
+              <td>{{ title }}</td>
+              <!-- <td>{{ route.lat }}</td>
+              <td>{{ route.lon }}</td> -->
             </tr>
           </table>
         </div>
@@ -59,12 +51,42 @@
 </template>
 
 <script>
+import axios from 'axios'
+import store from '@/store/store.js';
 export default {
   data() {
     return {
-      
+      buses: [],
+      users: [],
+      routes: [],
     };},
-  mounted() {},
+      computed: {
+  titles:function(){
+    var titles = [];
+    for(var i = 0; i < this.routes.length; i++){
+      for(var k = 0; k < this.routes[i].length; k++){
+        titles.push(this.routes[i][k].name);
+      }
+    }
+    return titles;
+  }
+},
+  mounted() {
+      axios
+    .get(`http://127.0.0.1:5000/dash_buses/${store.state.client_name}`)
+    .then((response1) => {
+      (this.buses = response1.data)
+      // eslint-disable-next-line
+      console.log(response1);
+    },),
+      axios
+    .get(`http://127.0.0.1:5000/dash_routes/${store.state.client_name}`)
+    .then((response2) => {
+      (this.routes = response2.data)
+      // eslint-disable-next-line
+      console.log(response2);
+    },)
+  },
 };
 </script>
 
@@ -134,6 +156,7 @@ section:after {
   overflow: auto;
 }
 .users{
+  padding: 0px 10px;
   height: 300px;
   width: 98%;
   border: solid rgb(214, 214, 214);
