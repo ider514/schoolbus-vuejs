@@ -26,19 +26,28 @@
         </div>
         <div class="route">
           <h2>Маршрут</h2>
+          <button
+            type="button"
+            class="btn btn-success"
+            @click="showRouteAdd()"
+          >
+            +
+          </button>
           <table style="width:100%">
             <tr>
-              <th>Нэр</th>
+              <th>Nº</th>
+              <th>Зогсоол</th>
               <th>Өргөрөг</th>
               <th>Уртраг</th>
             </tr>
             <tr
-              v-for="title in titles"
-              :key="title"
+              v-for="route in routes"
+              :key="route"
             >
-              <td>{{ title }}</td>
-              <!-- <td>{{ route.lat }}</td>
-              <td>{{ route.lon }}</td> -->
+              <td>{{ route.number }}</td>
+              <td>{{ route.stop }}</td>
+              <td>{{ route.lat }}</td>
+              <td>{{ route.lon }}</td>
             </tr>
           </table>
         </div>
@@ -50,17 +59,22 @@
   </div>
 </template>
 
+
+
 <script>
 import axios from 'axios'
 import store from '@/store/store.js';
 export default {
-  data() {
-    return {
-      buses: [],
-      users: [],
-      routes: [],
-    };},
-      computed: {
+  components: {
+    },
+    data() {
+      return {
+        buses: [],
+        users: [],
+        routes: [],
+        }
+    },
+        computed: {
   titles:function(){
     var titles = [];
     for(var i = 0; i < this.routes.length; i++){
@@ -71,7 +85,7 @@ export default {
     return titles;
   }
 },
-  mounted() {
+    mounted() {
       axios
     .get(`http://127.0.0.1:5000/dash_buses/${store.state.client_name}`)
     .then((response1) => {
@@ -87,6 +101,11 @@ export default {
       console.log(response2);
     },)
   },
+    methods: { 
+      showRouteAdd() {
+        this.$router.replace('/route');
+      }
+    },
 };
 </script>
 
@@ -102,6 +121,7 @@ th, td {
   text-align: left;    
   border: 1px solid black;
   border-collapse: collapse;
+  padding: 5px;
 }
 body {
   background-color: rgb(240, 240, 240)
@@ -155,6 +175,14 @@ section:after {
   background-color: white;
   overflow: auto;
 }
+.route h2 {
+  float: left;
+  margin: 5px;
+}
+.route button {
+  margin: 10px;
+  float: left;
+}
 .users{
   padding: 0px 10px;
   height: 300px;
@@ -164,41 +192,6 @@ section:after {
   background-color: white;
   margin-left: 1%;
   margin-top: 1%;
-}
-.sidenav img {
-  padding-bottom: 30px;
-  width: 100%;
-}
-/* The sidebar menu */
-.sidenav {
-  /* margin-top: 60px; */
-  height: 100%; /* Full-height: remove this if you want "auto" height */
-  width: 13%; /* Set the width of the sidebar */
-  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-  z-index: 1; /* Stay on top */
-  top: 0; /* Stay at the top */
-  left: 0;
-  background-color: rgb(255, 193, 7); /* Black */
-  overflow-x: hidden; /* Disable horizontal scroll */
-}
-
-/* The navigation menu links */
-.sidenav a {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 10px;
-  padding-right: 10px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #ffffff;
-  display: block;
-  text-align: left;
-}
-
-/* When you mouse over the navigation links, change their color */
-.sidenav a:hover {
-  color: #f1f1f1;
-  background-color: purple
 }
 </style>
 

@@ -9,9 +9,13 @@ const store = new Vuex.Store(
       client: false,
       admin: false,
       client_name: '',
-      info: {},
+      stop: [],
+
     },
     mutations: {
+      setStop(state, response) {
+        state.stop.push(response);
+      },
       setInfo(state, response) {
         state.info = response;
       },

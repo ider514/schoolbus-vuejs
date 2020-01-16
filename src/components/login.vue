@@ -98,13 +98,6 @@ export default {
             this.$store.commit('setClient', true);
             this.$store.commit('setName', this.login.email);
             this.$router.replace('/client');
-            const infopath = `http://localhost:5000/get_info/${this.login.email}`;
-            axios.get(infopath)
-              .then((response) => {
-                this.$store.commit('setInfo', response.data);
-              });
-            // eslint-disable-next-line
-            console.log('logged');
           }
           if (res.data === 'error') {
             // eslint-disable-next-line
