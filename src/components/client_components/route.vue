@@ -11,7 +11,7 @@
               <div class="modal-container">
                 <div class="modal-header">
                   <h3>
-                    Маршрут Нэмэх
+                    Зогсоол
                   </h3>
                 </div>
 
@@ -39,12 +39,11 @@
                 </div>
 
                 <div class="modal-footer">
-                  <button
-                    class="modal-default-button"
-                    @click="addRoute()"
-                  >
-                    Нэмэх
-                  </button>
+                  <a
+                    type="button"
+                    class="btn btn-success"
+                    @click="addStop()"
+                  >Нэмэх</a>
                   <button
                     class="modal-default-button"
                     @click="closeModal()"
@@ -64,28 +63,39 @@
       <section>
         <div class="addroute">
           <h2>Маршрут</h2>
-          <button
-            type="button"
-            class="btn btn-success"
-            @click="showModal()"
+          <input 
+            v-model="route_name"
+            type="text"
+            name="Маршруутын Нэр"
+            placeholder="Маршруутын Нэр"
           >
-            +
-          </button>
-          <table style="width:100%">
+          <table>
             <tr>
               <th>Нэр</th>
               <th>Өргөрөг</th>
               <th>Уртраг</th>
             </tr>
             <tr
-              v-for="route in routes"
-              :key="route"
+              v-for="(route, index) in routes"
+              :key="index"
             >
-              <td>{{ route.stop }}</td>
+              <td>{{ route.name }}</td>
               <td>{{ route.lat }}</td>
               <td>{{ route.lon }}</td>
             </tr>
           </table>
+          <button
+            type="button"
+            class="btn btn-success"
+            @click="showModal()"
+          >
+            Зогсоол Нэмэх
+          </button>
+          <a
+            type="button"
+            class="btn btn-success"
+            @click="addRoute()"
+          >Маршрут Нэмэх</a>
         </div>
       </section>
     </body>
@@ -95,14 +105,15 @@
 
 
 <script>
-// import axios from 'axios'
-// import store from '@/store/store.js';
+import axios from 'axios'
+import store from '@/store/store.js';
 
 export default {
     data() {
       return {
         isModalVisible: false,
         routes: [],
+        route_name: '',
         stop: {
           lon: '',
           lat: '',
@@ -110,22 +121,40 @@ export default {
         }
         }
     },
-    mounted() {
-  },
     methods: {
+      cloneRoute(route) {
+    var clone ={};
+    for( var key in route ){
+        if(route.hasOwnProperty(key))
+            clone[key]=route[key];
+    }
+    return clone;
+},
       showModal() {
         this.isModalVisible = true;
       },
       closeModal() {
         this.isModalVisible = false;
       },
-      close() {
-        this.$emit('close');
+      addStop() {
+        if (this.stop.name.length !==0 && this.stop.lon.length !==0 && this.stop.lat.length !==0) {
+          var clone = this.cloneRoute(this.stop);
+          this.routes.push(clone);
+          this.isModalVisible = false;
+        }
       },
-      addRoute(){
-        this.$store.commit('setStop', this.stop);
-        this.$emit('close');
-      }  
+      addRoute() {
+      const infopath = 'http://localhost:5000/dash_routes/1';
+      axios.post(infopath, {'route': this.routes, 'username': store.state.client_name, 'route_name': this.route_name})
+        .then((response) => {
+          // eslint-disable-next-line
+          console.error(response);
+        })
+        .catch((error) => {
+        // eslint-disable-next-line
+          console.error(error);
+        });
+      }
     },
 };
 </script>
@@ -135,8 +164,13 @@ export default {
 * {
   box-sizing: border-box;
 }
-table {
-  overflow: auto;
+.addroute table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 5px 10px;
+}
+.addroute input{
+  margin: 6px;
 }
 th, td {
   text-align: left;    
@@ -174,8 +208,8 @@ section:after {
   clear: both;
 }
 .addroute {
-  margin-right: 1%;
-  padding: 10px 10px;
+  margin: 1%;
+  padding: 10px;
   width: 96%;
   height: 100%;
   float: right;
@@ -185,23 +219,80 @@ section:after {
   overflow: auto;
 }
 .addroute h2 {
-  float: left;
   margin: 5px;
 }
 .addroute button {
-  margin: 10px;
-  float: left;
+  margin: 5px;
+  background-color: rgb(255, 193, 7);
+  border: none;
+  color: black;
+  padding: 12px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
 }
-  .modal-mask {
-  position: fixed;
-  z-index: 9998;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, .5);
-  display: table;
-  transition: opacity .3s ease;
+.addroute button:hover {
+  background-color: purple;
+}
+.addroute a {
+  float: right;
+  margin: 5px;
+  background-color: rgb(255, 193, 7);
+  border: none;
+  color: black;
+  padding: 12px 20px;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 16px;
+}
+.addroute a:hover {
+  background-color: purple;
+}
+.modal-footer a {
+  float: left;
+  margin: 5px;
+  background-color: rgb(255, 193, 7);
+  border: none;
+  color: black;
+  padding: 12px 20px;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 16px;
+}
+.modal-footer button {
+  float: right;
+  margin: 5px;
+  background-color: rgb(255, 193, 7);
+  border: none;
+  color: black;
+  padding: 12px 20px;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 16px;
+}
+.modal-footer a:hover {
+  background-color: purple;
+}
+.modal-footer button:hover {
+  background-color: purple;
+}
+.modal-body input {
+  margin: 5px 0px;
+}
+.modal-mask {
+position: fixed;
+z-index: 9998;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(0, 0, 0, .5);
+display: table;
+transition: opacity .3s ease;
 }
 .modal-container {
   width: 500px;
@@ -216,7 +307,7 @@ section:after {
 }
 .modal-header h3 {
   margin-top: 0;
-  color: #42b983;
+  color: black;
 }
 
 .modal-body {

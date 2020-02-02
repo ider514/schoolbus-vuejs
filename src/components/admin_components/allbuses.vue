@@ -11,8 +11,8 @@
       </thead>
       <tbody>
         <tr
-          v-for="x in buses"
-          :key="x"
+          v-for="(x, index) in buses"
+          :key="index"
         >
           <th scope="row">
             {{ x.licensenumber }}
