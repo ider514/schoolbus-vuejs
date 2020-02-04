@@ -46,19 +46,71 @@
           </div>
         </transition>
       </modal1>
+      <modal1
+        v-show="isModalVisible1"
+        @close="closeModal1"
+      >
+        <transition name="modal1">
+          <div class="modal-mask1">
+            <div class="modal-container1">
+              <div class="modal-header1">
+                <h3>
+                  Маршрут хувиаралах
+                </h3>
+              </div>
+              <div class="modal-body1">
+                <form>
+                  Автобус:<br>
+                  <input
+                    v-model="newConnection.bus"
+                    type="text"
+                    name="firstname"
+                  ><br>
+                  Маршрут:<br>
+                  <input
+                    v-model="newConnection.route"
+                    type="text"
+                    name="firstname"
+                  >
+                </form>
+              </div>
+              <div class="modal-footer">
+                <a
+                  type="button"
+                  class="btn btn-success"
+                  @click="connectRoute()"
+                >Хувиаралах</a>
+                <button
+                  class="modal-default-button"
+                  @click="closeModal1()"
+                >
+                  Хаах
+                </button>
+              </div>
+            </div>
+          </div>
+        </transition>
+      </modal1>
       <div class="top">
         <img src="../assets/logo.png">
         <h1>SCHOOL BUS</h1>
       </div>
       <section>
         <div class="bus">
-          <h2>Автус</h2>
+          <h2>Автобус</h2>
+          <button
+            type="button"
+            class="btn btn-success"
+            @click="showModal1()"
+          >
+            Хувиарлах
+          </button>
           <table style="width:100%">
             <tr>
               <th>ID</th>
               <th>Дугаар</th>
               <th>Утас</th>
-              <th>Чиглэл</th>
+              <th>Маршрут</th>
             </tr>
             <tr
               v-for="(bus, index) in buses"
@@ -133,14 +185,20 @@ import axios from 'axios'
 import store from '@/store/store.js';
 export default {
   components: {
+    // modal1: modal1
     },
     data() {
       return {
+        newConnection: {
+          bus: '',
+          route: '',
+        },
         newUser: {
           username: '',
           password: '',
         },
         isModalVisible: false,
+        isModalVisible1: false,
         buses: [],
         users: [],
         routes: [],
@@ -181,6 +239,19 @@ export default {
     },)
   },
     methods: { 
+      connectRoute() {
+        if (this.newUser.password.length !==0 && this.newUser.username.length !==0){
+      const infopath = 'http://68.183.187.255:5000/dash_users/1';
+      axios.post(infopath, {'user': this.newUser, 'username': store.state.client_name})
+        .then((response) => {
+          // eslint-disable-next-line
+          console.error(response);
+        })
+        .catch((error) => {
+        // eslint-disable-next-line
+          console.error(error);
+        })}
+      },
       addUser() {
         if (this.newUser.password.length !==0 && this.newUser.username.length !==0){
       const infopath = 'http://68.183.187.255:5000/dash_users/1';
@@ -199,6 +270,12 @@ export default {
       },
       closeModal() {
         this.isModalVisible = false;
+      },
+      showModal1() {
+        this.isModalVisible1 = true;
+      },
+      closeModal1() {
+        this.isModalVisible1 = false;
       },
       showRouteAdd() {
         this.$router.replace('/route');
@@ -263,11 +340,27 @@ section:after {
   background-color: white;
 }
 .bus h2 {
-  margin: 16px 3px;
+  margin: 10px 3px 9px 3px;
+  float: left;
+}
+.bus button {
+  background-color: rgb(255, 193, 7);
+  border: none;
+  margin: 10px 1px 9px 3px;
+  float: right;
+  color: black;
+}
+.bus button:hover {
+  background-color: purple;
+}
+.bus button:focus {
+  background-color: purple!important;
+  outline: none;
+  box-shadow: none!important;
 }
 .route {
   margin-right: 1%;
-  padding: 10px 10px;
+  padding: 0px 10px 10px 10px;
   width: 48.5%;
   height: 400px;
   float: right;
@@ -278,14 +371,25 @@ section:after {
 }
 .route h2 {
   float: left;
-  margin: 5px;
+  margin: 10px 3px 9px 3px;
 }
 .route button {
-  margin: 10px;
+  background-color: rgb(255, 193, 7);
+  border: none;
+  margin: 10px 3px 9px 3px;
   float: left;
+  color: black;
+}
+.route button:hover {
+  background-color: purple;
+}
+.route button:focus {
+  background-color: purple!important;
+  outline: none;
+  box-shadow: none!important;
 }
 .users{
-  padding: 10px 10px;
+  padding: 0px 10px 10px 10px;
   height: 100%;
   width: 98%;
   border: solid rgb(214, 214, 214);
@@ -296,11 +400,19 @@ section:after {
 }
 .users h2 {
   float: left;
-  margin: 5px;
+  margin: 10px 3px 9px 3px;
 }
 .users button {
-    margin: 10px;
+  background-color: rgb(255, 193, 7);
+  border: none;
+  margin: 10px 3px 9px 10px;
   float: left;
+  color: black;
+}
+.users button:focus {
+  background-color: purple!important;
+  outline: none;
+  box-shadow: none!important;
 }
 .modal-footer1 a {
   float: left;
