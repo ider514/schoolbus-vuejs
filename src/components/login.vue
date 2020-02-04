@@ -87,7 +87,7 @@ export default {
   },
   methods: {
     onLogin() {
-      const path = `http://localhost:5000/dash_login/${this.login.email}/${this.login.password}`;
+      const path = `http://68.183.187.255:5000/dash_login/${this.login.email}/${this.login.password}`;
       axios.get(path)
         .then((res) => {
           if (res.data === 'admin') {
