@@ -35,7 +35,7 @@ export default {
     };
   },
   mounted() {
-    const infopath = 'http://localhost:5000/dash_buses/all';
+    const infopath = 'http://68.183.187.255:5000/dash_buses/all';
     axios.get(infopath)
       .then((response) => { this.buses = response.data; });
     document.title = 'School-Bus';

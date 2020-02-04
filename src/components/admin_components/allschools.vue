@@ -105,7 +105,7 @@ export default {
     };
   },
   mounted() {
-    const infopath = 'http://localhost:5000/dash_schools/1/1';
+    const infopath = 'http://68.183.187.255:5000/dash_schools/1/1';
     axios.get(infopath)
       .then((response) => {
         this.schools = response.data;
@@ -126,7 +126,7 @@ export default {
       this.isModalVisible = false;
     },
     addSchool() {
-      const infopath = `http://localhost:5000/dash_schools/${this.school.email}/${this.school.password}`;
+      const infopath = `http://68.183.187.255:5000/dash_schools/${this.school.email}/${this.school.password}`;
       axios.post(infopath)
         .catch((error) => {
         // eslint-disable-next-line
@@ -134,7 +134,7 @@ export default {
         });
     },
     addBus() {
-      const infopath = `http://localhost:5000/dash_buses/${this.newbus.school}`;
+      const infopath = `http://68.183.187.255:5000/dash_buses/${this.newbus.school}`;
       axios.post(infopath, {'bus': this.newbus.number})
         .then((response) => {
           // eslint-disable-next-line

@@ -159,21 +159,21 @@ export default {
 },
     mounted() {
       axios
-    .get(`http://127.0.0.1:5000/dash_buses/${store.state.client_name}`)
+    .get(`http://68.183.187.255:5000/dash_buses/${store.state.client_name}`)
     .then((response1) => {
       (this.buses = response1.data)
       // eslint-disable-next-line
       console.log(response1);
     },),
       axios
-    .get(`http://127.0.0.1:5000/dash_routes/${store.state.client_name}`)
+    .get(`http://68.183.187.255:5000/dash_routes/${store.state.client_name}`)
     .then((response2) => {
       (this.routes = response2.data)
       // eslint-disable-next-line
       console.log(response2);
     },),
       axios
-    .get(`http://127.0.0.1:5000/dash_users/${store.state.client_name}`)
+    .get(`http://68.183.187.255:5000/dash_users/${store.state.client_name}`)
     .then((response3) => {
       (this.users = response3.data)
       // eslint-disable-next-line
@@ -183,7 +183,7 @@ export default {
     methods: { 
       addUser() {
         if (this.newUser.password.length !==0 && this.newUser.username.length !==0){
-      const infopath = 'http://localhost:5000/dash_users/1';
+      const infopath = 'http://68.183.187.255:5000/dash_users/1';
       axios.post(infopath, {'user': this.newUser, 'username': store.state.client_name})
         .then((response) => {
           // eslint-disable-next-line

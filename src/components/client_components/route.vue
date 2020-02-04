@@ -144,7 +144,7 @@ export default {
         }
       },
       addRoute() {
-      const infopath = 'http://localhost:5000/dash_routes/1';
+      const infopath = 'http://68.183.187.255:5000/dash_routes/1';
       axios.post(infopath, {'route': this.routes, 'username': store.state.client_name, 'route_name': this.route_name})
         .then((response) => {
           // eslint-disable-next-line

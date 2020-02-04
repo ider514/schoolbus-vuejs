@@ -18,7 +18,7 @@ export default new VueRouter({
     {
       path: '/',
       redirect: {
-        name: 'login',
+        name: 'Login',
       },
     },
     {
@@ -76,7 +76,7 @@ export default new VueRouter({
     },
     {
       path: '/login',
-      name: 'login',
+      name: 'Login',
       component: Login,
     },
     {
