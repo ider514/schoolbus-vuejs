@@ -61,17 +61,43 @@
               <div class="modal-body1">
                 <form>
                   Автобус:<br>
-                  <input
-                    v-model="newConnection.bus"
-                    type="text"
-                    name="firstname"
-                  ><br>
-                  Маршрут:<br>
-                  <input
-                    v-model="newConnection.route"
-                    type="text"
-                    name="firstname"
+                  <select
+                    class="form-control"
+                    @change="changeBus($event)"
                   >
+                    <option
+                      value=""
+                      selected
+                      disabled
+                    >
+                      Choose
+                    </option>
+                    <option
+                      v-for="(bus, index) in buses"
+                      :key="index"
+                    >
+                      {{ bus.licensenumber }}
+                    </option>
+                  </select><br>
+                  Маршрут:<br>
+                  <select
+                    class="form-control"
+                    @change="changeRoute($event)"
+                  >
+                    <option
+                      value=""
+                      selected
+                      disabled
+                    >
+                      Choose
+                    </option>
+                    <option
+                      v-for="(route, index) in routes"
+                      :key="index"
+                    >
+                      {{ route.name }}
+                    </option>
+                  </select>
                 </form>
               </div>
               <div class="modal-footer">
@@ -239,8 +265,14 @@ export default {
     },)
   },
     methods: { 
+      changeBus (event) {
+      this.newConnection.bus = event.target.options[event.target.options.selectedIndex].text
+    },
+      changeRoute (event) {
+      this.selectedJobTitle = event.target.options[event.target.options.selectedIndex].text
+    },
       connectRoute() {
-        if (this.newUser.password.length !==0 && this.newUser.username.length !==0){
+        if (this.newConnection.bus.length !==0 && this.newConnection.route.length !==0){
       const infopath = 'http://68.183.187.255:5000/dash_users/1';
       axios.post(infopath, {'user': this.newUser, 'username': store.state.client_name})
         .then((response) => {
@@ -273,6 +305,13 @@ export default {
       },
       showModal1() {
         this.isModalVisible1 = true;
+        axios
+    // .get(`http://68.183.187.255:5000/dash_routes/${store.state.client_name}`)
+    // .then((response2) => {
+    //   (this.routes = response2.data)
+    //   // eslint-disable-next-line
+    //   console.log(response2);
+    // },)
       },
       closeModal1() {
         this.isModalVisible1 = false;
@@ -303,7 +342,8 @@ body {
 }
 .top img {
   float: left;
-  width: 8.5%;
+  height: 65px;
+  width: 120px;
 }
 h1 {
   color: white;
