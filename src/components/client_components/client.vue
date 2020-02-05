@@ -70,7 +70,7 @@
                       selected
                       disabled
                     >
-                      Choose
+                      Сонгох
                     </option>
                     <option
                       v-for="(bus, index) in buses"
@@ -89,13 +89,13 @@
                       selected
                       disabled
                     >
-                      Choose
+                      Сонгох
                     </option>
                     <option
-                      v-for="(route, index) in routes"
+                      v-for="(route, index) in newConnection.routes"
                       :key="index"
                     >
-                      {{ route.name }}
+                      {{ route }}
                     </option>
                   </select>
                 </form>
@@ -218,6 +218,7 @@ export default {
         newConnection: {
           bus: '',
           route: '',
+          routes: [],
         },
         newUser: {
           username: '',
@@ -269,12 +270,12 @@ export default {
       this.newConnection.bus = event.target.options[event.target.options.selectedIndex].text
     },
       changeRoute (event) {
-      this.selectedJobTitle = event.target.options[event.target.options.selectedIndex].text
+      this.newConnection.route = event.target.options[event.target.options.selectedIndex].text
     },
       connectRoute() {
         if (this.newConnection.bus.length !==0 && this.newConnection.route.length !==0){
-      const infopath = 'http://68.183.187.255:5000/dash_users/1';
-      axios.post(infopath, {'user': this.newUser, 'username': store.state.client_name})
+      const infopath = 'http://68.183.187.255:5000/dash_connect';
+      axios.post(infopath, {'bus': this.newConnection.bus, 'route': this.newConnection.route, 'school': store.state.client_name})
         .then((response) => {
           // eslint-disable-next-line
           console.error(response);
@@ -304,14 +305,11 @@ export default {
         this.isModalVisible = false;
       },
       showModal1() {
+        var i;
         this.isModalVisible1 = true;
-        axios
-    // .get(`http://68.183.187.255:5000/dash_routes/${store.state.client_name}`)
-    // .then((response2) => {
-    //   (this.routes = response2.data)
-    //   // eslint-disable-next-line
-    //   console.log(response2);
-    // },)
+        for (i = 0; i < this.routes.length; i++) {
+        this.newConnection.routes.push(this.routes[i].name)}
+        this.newConnection.routes = this.newConnection.routes.filter(item => item);
       },
       closeModal1() {
         this.isModalVisible1 = false;
@@ -500,7 +498,7 @@ transition: opacity .3s ease;
 }
 .modal-container1 {
   width: 400px;
-  height: 310px;
+  height: 330px;
   margin: 10px auto;
   padding: 20px 30px;
   background-color: #fff;
